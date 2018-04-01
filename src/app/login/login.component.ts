@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 import { LoginService } from '../service/login/login.service';
 import { LoginUserDetail } from '../model/LoginUserDetail';
 
 @Component({
-  selector: 'app-login',
+  //selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  returnUrl : string = 'home';
   model: LoginUserDetail = {
                             username : '',
                             password :''
                           };
   loading = false;
-  constructor(private loginService:LoginService) { }
+  constructor(private router: Router, private loginService:LoginService) { }
 
   ngOnInit() {
   }
@@ -23,8 +25,10 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.model)
         .subscribe(
             data => {
-              this.loading = false;
-                //this.router.navigate([this.returnUrl]);
+              if(data.token)
+                this.router.navigate([this.returnUrl]);
+                
+                this.loading = false;
             },
             error => {
                // this.alertService.error(error);

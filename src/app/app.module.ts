@@ -6,18 +6,22 @@ import { AppComponent } from './app.component';
 import { CustomHttpInterceptor } from './interceptor/CustomHttpInterceptor';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './service/login/login.service';
+import { HomeComponent } from './home/home.component';
+import { routing } from './app.routing';
+import { UserDetailService } from './service/user-detail.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
-    BrowserModule, FormsModule, HttpClientModule
+    BrowserModule, FormsModule, HttpClientModule, routing
   ],
   providers: [
-    LoginService,
+    LoginService, UserDetailService,
     {provide:HTTP_INTERCEPTORS, useClass:CustomHttpInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
