@@ -9,6 +9,7 @@ export class UserDetailService {
   getUserDetails() {
     return this._http.post<any>(this.url, {})
       .map(userInfo => {
+        sessionStorage.setItem('currentUserInfo', JSON.stringify(userInfo));
         console.log(JSON.stringify(userInfo));
         return userInfo;
       });

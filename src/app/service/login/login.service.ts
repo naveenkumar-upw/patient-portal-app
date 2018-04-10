@@ -7,17 +7,17 @@ import { HttpResponse } from 'selenium-webdriver/http';
 
 @Injectable()
 export class LoginService {
-  loginUrl : string = '/login/';
+  url : string = '/login/';
   constructor(private _http: HttpClient) { }
 
   login(loginUserDetail:LoginUserDetail) {
-    return this._http.post<any>(this.loginUrl, loginUserDetail)
+    return this._http.post<any>(this.url, loginUserDetail)
       .map(user => {
         console.log(JSON.stringify(user));
         if (user && user.token) {
           //console.log(user.get)
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
+          sessionStorage.setItem('currentUser', JSON.stringify(user));
       }
         return user;
       });
@@ -26,6 +26,8 @@ export class LoginService {
   
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentUserInfo');
+
   }
 }
